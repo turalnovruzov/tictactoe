@@ -3,6 +3,9 @@ import os
 import time
 from tictactoe import Tictactoe
 
+X = 'X'
+O = 'O'
+
 # Initialize pygame
 pygame.init()
 
@@ -45,12 +48,6 @@ focus = None
 # Game loop
 while True:
 
-    # Check for events
-    for events in pygame.event.get():
-        if events.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-
     # Background color
     screen.fill(BLACK)
 
@@ -77,26 +74,6 @@ while True:
         playORect.center = playOButton.center
         pygame.draw.rect(screen, WHITE, playOButton)
         screen.blit(playO, playORect)
-
-        # Mouse click
-        if pygame.mouse.get_pressed()[0]:
-            print('a')
-            point = pygame.mouse.get_pos()
-            b_ = False
-
-            # Play as X or O
-            if playXButton.collidepoint(point):
-                ai_turn = False
-                b_ = True
-            elif playOButton.collidepoint(point):
-                ai_turn = True
-                b_ = True
-            
-            # Start Play state
-            if b_:
-                gamestate = PLAY_STATE
-                ttt = Tictactoe()
-                time.sleep(0.1)
     
     elif gamestate == PLAY_STATE:
 
@@ -123,21 +100,53 @@ while True:
                     cell_value_rect.center = cells[i][j].center
                     screen.blit(cell_value, cell_value_rect)
         
-        # Mouse click
-        if pygame.mouse.get_pressed()[0]:
-            point = pygame.mouse.get_pos()
-
-            # Cells
-            b_ = True
-            for i in range(3):
-                for j in range(3):
-                    if cells[i][j].collidepoint(point):
-                        focus = (i, j)
-                        b_ = False
-                        break
-            
-            if b_:
-                focus = None
-        
+        print(focus)
 
     pygame.display.flip()
+
+
+    # Check for events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        
+        # Menu State
+        if gamestate == MENU_STATE:
+
+            # Mouse click
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                point = event.pos
+                b_ = False
+
+                # Play as X or O
+                if playXButton.collidepoint(point):
+                    ai_turn = False
+                    b_ = True
+                elif playOButton.collidepoint(point):
+                    ai_turn = True
+                    b_ = True
+                
+                # Start Play state
+                if b_:
+                    gamestate = PLAY_STATE
+                    ttt = Tictactoe()
+                    time.sleep(0.1)
+        # Play state
+        elif gamestate == PLAY_STATE:
+
+            # Mouse click
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                point = event.pos
+
+                # Cells
+                b_ = True
+                for i in range(3):
+                    for j in range(3):
+                        if cells[i][j].collidepoint(point):
+                            focus = (i, j)
+                            b_ = False
+                            break
+                
+                if b_:
+                    focus = None
