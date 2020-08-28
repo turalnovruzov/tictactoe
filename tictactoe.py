@@ -21,3 +21,12 @@ class Tictactoe:
             [None, None, None],
             [None, None, None]
         ]
+
+    def get_board(self):
+        """
+        Get function for board
+
+        Returns:
+            Nested list (3 x 3): board
+        """
+        return self.board.copy()
