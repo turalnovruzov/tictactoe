@@ -1,3 +1,3 @@
-# Tictactoe
+# Tic-Tac-Toe
 
-Tictactoe with an AI, who has years of experience and is unbeatable.
+Tic-Tac-Toe with an AI, who has years of experience and is unbeatable.
