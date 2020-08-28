@@ -1,3 +1,7 @@
+# Constants
+X = 'X'
+O = 'O'
+
 class Tictactoe:
     """
     Tictactoe contains the game model.
@@ -8,12 +12,8 @@ class Tictactoe:
         """
         Initializes a new Tictactoe game. Creates player and board.
         """
-        # Constants
-        self.X = 'X'
-        self.O = 'O'
-
         # Current player
-        self.player = self.X
+        self.player = X
 
         # Board
         self.board = [
