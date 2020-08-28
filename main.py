@@ -1,5 +1,6 @@
 import pygame
 import os
+import time
 from tictactoe import Tictactoe
 
 # Initialize pygame
@@ -37,6 +38,9 @@ ai_turn = None
 
 # tictactoe
 ttt = None
+
+# Focused cell
+focus = None
 
 # Game loop
 while True:
@@ -92,6 +96,7 @@ while True:
             if b_:
                 gamestate = PLAY_STATE
                 ttt = Tictactoe()
+                time.sleep(0.1)
     
     elif gamestate == PLAY_STATE:
 
@@ -117,5 +122,22 @@ while True:
                     cell_value_rect = cell_value.get_rect()
                     cell_value_rect.center = cells[i][j].center
                     screen.blit(cell_value, cell_value_rect)
+        
+        # Mouse click
+        if pygame.mouse.get_pressed()[0]:
+            point = pygame.mouse.get_pos()
+
+            # Cells
+            b_ = True
+            for i in range(3):
+                for j in range(3):
+                    if cells[i][j].collidepoint(point):
+                        focus = (i, j)
+                        b_ = False
+                        break
+            
+            if b_:
+                focus = None
+        
 
     pygame.display.flip()
