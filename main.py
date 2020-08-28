@@ -14,9 +14,13 @@ pygame.display.set_caption('TicTacToe')
 screen = pygame.display.set_mode(SIZE)
 
 # Fonts
-MEDIUM_FONT = pygame.font.Font(os.path.join('fonts', 'OpenSans-Regular.ttf'), 40)
-LARGE_FONT = pygame.font.Font(os.path.join('fonts', 'OpenSans-Regular.ttf'), 60)
+M_FONT = pygame.font.Font(os.path.join('fonts', 'OpenSans-Regular.ttf'), 40)
+L_FONT = pygame.font.Font(os.path.join('fonts', 'OpenSans-Regular.ttf'), 60)
+XL_FONT = pygame.font.Font(os.path.join('fonts', 'OpenSans-Regular.ttf'), 72)
 
+# Cell properties
+cell_width = 120
+cell_pos = (WIDTH / 2 - cell_width * 1.5, HEIGHT / 2 - cell_width * 1.5)
 
 # Colors
 WHITE = (255, 255, 255)
@@ -49,13 +53,13 @@ while True:
     if gamestate == MENU_STATE:
 
         # Title
-        title = LARGE_FONT.render('Play Tic-Tac-Toe', True, WHITE)
+        title = L_FONT.render('Play Tic-Tac-Toe', True, WHITE)
         title_rect = title.get_rect()
         title_rect.center = (WIDTH / 2, 100)
         screen.blit(title, title_rect)
         
         # Play as X button
-        playX = MEDIUM_FONT.render('Play as X', True, BLACK)
+        playX = M_FONT.render('Play as X', True, BLACK)
         playXRect = playX.get_rect()
         playXButton = pygame.Rect(WIDTH / 2 - (230) / 2, HEIGHT / 2 - (playXRect.height + 30), 230, playXRect.height + 20)
         playXRect.center = playXButton.center
@@ -63,7 +67,7 @@ while True:
         screen.blit(playX, playXRect)
 
         # Play as O button
-        playO = MEDIUM_FONT.render('Play as O', True, BLACK)
+        playO = M_FONT.render('Play as O', True, BLACK)
         playORect = playO.get_rect()
         playOButton = pygame.Rect(WIDTH / 2 - (230) / 2, HEIGHT / 2 + 30, 230, playORect.height + 20)
         playORect.center = playOButton.center
@@ -92,9 +96,6 @@ while True:
     elif gamestate == PLAY_STATE:
 
         # Draw cells
-        cell_width = 120
-        cell_pos = (WIDTH / 2 - cell_width * 1.5, HEIGHT / 2 - cell_width * 1.5)
-
         cells = []
         for i in range(3):
             row = []
@@ -106,6 +107,15 @@ while True:
             
             cells.append(row)
         
+        # Draw cell values
+        board = ttt.get_board()
 
+        for i in range(3):
+            for j in range(3):
+                if board[i][j]:
+                    cell_value = XL_FONT.render(board[i][j], True, WHITE)
+                    cell_value_rect = cell_value.get_rect()
+                    cell_value_rect.center = cells[i][j].center
+                    screen.blit(cell_value, cell_value_rect)
 
     pygame.display.flip()
