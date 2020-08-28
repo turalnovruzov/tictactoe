@@ -30,3 +30,18 @@ class Tictactoe:
             Nested list (3 x 3): board
         """
         return self.board.copy()
+    
+    def is_valid_action(self, action):
+        """
+        Checks if the action is valid
+
+        Args:
+            action (tuple (i, j)): coordinates of a cell
+
+        Returns:
+            bool: True if the action is valid, False otherwise
+        """
+        if self.board[action[0]][action[1]] == None:
+            return True
+        
+        return False
