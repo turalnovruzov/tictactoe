@@ -74,8 +74,10 @@ while True:
     
     elif gamestate == PLAY_STATE:
 
-        # Draw title
+        # Game over
         if ttt.gameover():
+
+            # Draw title
             if ttt.get_winner():
                 title = L_FONT.render(f'{ttt.get_winner()} won', True, WHITE)
             else:
@@ -84,6 +86,7 @@ while True:
             title_rect = title.get_rect()
             title_rect.center = (WIDTH / 2, 60)
             screen.blit(title, title_rect)
+
 
         # Draw cells
         cells = []
@@ -108,6 +111,14 @@ while True:
                     cell_value_rect.center = cells[i][j].center
                     screen.blit(cell_value, cell_value_rect)
 
+        # Draw menu button
+        menu = M_FONT.render('Menu', True, BLACK)
+        menu_rect = menu.get_rect()
+        menu_button = pygame.Rect(WIDTH / 2 - 200 / 2, HEIGHT - (menu_rect.height + 30), 200, menu_rect.height)
+        menu_rect.center = menu_button.center
+        pygame.draw.rect(screen, WHITE, menu_button)
+        screen.blit(menu, menu_rect)
+    
     pygame.display.flip()
 
 
@@ -155,3 +166,7 @@ while True:
                                 if ttt.is_valid_action((i, j)):
                                     ttt.action((i, j))
                                 break
+                
+                # Menu button
+                if menu_button.collidepoint(point):
+                    gamestate = MENU_STATE
