@@ -11,6 +11,11 @@ pygame.display.set_caption('TicTacToe')
 # Set the screen
 WINDOW = pygame.display.set_mode(SIZE)
 
+MENU_STATE = 'Menu'
+PLAY_STATE = 'Play'
+
+gamestate = MENU_STATE
+
 # Game loop
 while True:
 
@@ -19,3 +24,5 @@ while True:
         if events.type == pygame.QUIT:
             pygame.quit()
             exit()
+
+    
