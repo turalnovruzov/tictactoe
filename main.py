@@ -1,10 +1,11 @@
 import pygame
 import os
+from tictactoe import Tictactoe
 
 # Initialize pygame
 pygame.init()
 
-SIZE = WIDTH, HEIGHT = 900, 600
+SIZE = WIDTH, HEIGHT = 800, 600
 
 # Window caption
 pygame.display.set_caption('TicTacToe')
@@ -30,6 +31,9 @@ gamestate = MENU_STATE
 # Player
 ai_turn = None
 
+# tictactoe
+ttt = None
+
 # Game loop
 while True:
 
@@ -39,10 +43,10 @@ while True:
             pygame.quit()
             exit()
 
-    if gamestate == MENU_STATE:
+    # Background color
+    screen.fill(BLACK)
 
-        # Background color
-        screen.fill(BLACK)
+    if gamestate == MENU_STATE:
 
         # Title
         title = LARGE_FONT.render('Play Tic-Tac-Toe', True, WHITE)
@@ -53,7 +57,7 @@ while True:
         # Play as X button
         playX = MEDIUM_FONT.render('Play as X', True, BLACK)
         playXRect = playX.get_rect()
-        playXButton = pygame.Rect(WIDTH / 2 - (WIDTH / 4) / 2, HEIGHT / 2 - (playXRect.height + 30), WIDTH / 4, playXRect.height + 20)
+        playXButton = pygame.Rect(WIDTH / 2 - (230) / 2, HEIGHT / 2 - (playXRect.height + 30), 230, playXRect.height + 20)
         playXRect.center = playXButton.center
         pygame.draw.rect(screen, WHITE, playXButton)
         screen.blit(playX, playXRect)
@@ -61,7 +65,7 @@ while True:
         # Play as O button
         playO = MEDIUM_FONT.render('Play as O', True, BLACK)
         playORect = playO.get_rect()
-        playOButton = pygame.Rect(WIDTH / 2 - (WIDTH / 4) / 2, HEIGHT / 2 + 30, WIDTH / 4, playORect.height + 20)
+        playOButton = pygame.Rect(WIDTH / 2 - (230) / 2, HEIGHT / 2 + 30, 230, playORect.height + 20)
         playORect.center = playOButton.center
         pygame.draw.rect(screen, WHITE, playOButton)
         screen.blit(playO, playORect)
@@ -70,13 +74,38 @@ while True:
         if pygame.mouse.get_pressed()[0]:
             print('a')
             point = pygame.mouse.get_pos()
+            b_ = False
 
             # Play as X or O
             if playXButton.collidepoint(point):
                 ai_turn = False
-                gamestate = PLAY_STATE
+                b_ = True
             elif playOButton.collidepoint(point):
                 ai_turn = True
+                b_ = True
+            
+            # Start Play state
+            if b_:
                 gamestate = PLAY_STATE
+                ttt = Tictactoe()
+    
+    elif gamestate == PLAY_STATE:
+
+        # Draw cells
+        cell_width = 120
+        cell_pos = (WIDTH / 2 - cell_width * 1.5, HEIGHT / 2 - cell_width * 1.5)
+
+        cells = []
+        for i in range(3):
+            row = []
+
+            for j in range(3):
+                rect = pygame.Rect(cell_pos[0] + j * cell_width, cell_pos[1] + i * cell_width, cell_width, cell_width)
+                pygame.draw.rect(screen, WHITE, rect, 3)
+                row.append(rect)
+            
+            cells.append(row)
+        
+
 
     pygame.display.flip()
