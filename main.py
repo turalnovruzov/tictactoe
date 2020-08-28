@@ -42,9 +42,6 @@ ai_turn = None
 # tictactoe
 ttt = None
 
-# Focused cell
-focus = None
-
 # Game loop
 while True:
 
@@ -99,8 +96,6 @@ while True:
                     cell_value_rect = cell_value.get_rect()
                     cell_value_rect.center = cells[i][j].center
                     screen.blit(cell_value, cell_value_rect)
-        
-        print(focus)
 
     pygame.display.flip()
 
@@ -144,9 +139,6 @@ while True:
                 for i in range(3):
                     for j in range(3):
                         if cells[i][j].collidepoint(point):
-                            focus = (i, j)
-                            b_ = False
+                            if ttt.is_valid_action((i, j)):
+                                ttt.action((i, j))
                             break
-                
-                if b_:
-                    focus = None

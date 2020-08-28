@@ -45,3 +45,22 @@ class Tictactoe:
             return True
         
         return False
+
+    def action(self, action):
+        """
+        Performs the given action if valid
+
+        Args:
+            action (tuple (i, j)): coordinates of a cell
+
+        Raises:
+            Exception: If action is invalid
+        """
+        if self.is_valid_action(action):
+            # Modify the board
+            self.board[action[0]][action[1]] = self.player
+
+            # Switch player
+            self.player = X if self.player == O else O
+        else:
+            raise Exception('Invalid action')
