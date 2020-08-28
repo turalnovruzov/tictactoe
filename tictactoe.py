@@ -13,7 +13,7 @@ class Tictactoe:
         self.O = 'O'
 
         # Current player
-        self.player = X
+        self.player = self.X
 
         # Board
         self.board = [
