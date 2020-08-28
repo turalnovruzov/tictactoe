@@ -74,6 +74,17 @@ while True:
     
     elif gamestate == PLAY_STATE:
 
+        # Draw title
+        if ttt.gameover():
+            if ttt.get_winner():
+                title = L_FONT.render(f'{ttt.get_winner()} won', True, WHITE)
+            else:
+                title = L_FONT.render('Draw', True, WHITE)
+
+            title_rect = title.get_rect()
+            title_rect.center = (WIDTH / 2, 60)
+            screen.blit(title, title_rect)
+
         # Draw cells
         cells = []
         for i in range(3):
@@ -134,11 +145,13 @@ while True:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 point = event.pos
 
-                # Cells
-                b_ = True
-                for i in range(3):
-                    for j in range(3):
-                        if cells[i][j].collidepoint(point):
-                            if ttt.is_valid_action((i, j)):
-                                ttt.action((i, j))
-                            break
+                # If game is not over
+                if not ttt.gameover():
+                    # Cells
+                    b_ = True
+                    for i in range(3):
+                        for j in range(3):
+                            if cells[i][j].collidepoint(point):
+                                if ttt.is_valid_action((i, j)):
+                                    ttt.action((i, j))
+                                break

@@ -22,6 +22,12 @@ class Tictactoe:
             [None, None, None]
         ]
 
+        # Winner
+        self.winner = None
+
+        # Game over
+        self._gameover = False
+
     def get_board(self):
         """
         Get function for board
@@ -30,6 +36,14 @@ class Tictactoe:
             Nested list (3 x 3): board
         """
         return self.board.copy()
+    
+    def get_winner(self):
+        """Get function for winner
+
+        Returns:
+            str: 'X' or 'O'
+        """
+        return self.winner
     
     def is_valid_action(self, action):
         """
@@ -64,3 +78,65 @@ class Tictactoe:
             self.player = X if self.player == O else O
         else:
             raise Exception('Invalid action')
+    
+    def terminal(self):
+        """
+        Check s if the curretn state is terminal
+
+        Returns:
+            bool: True if terminal, False otherwise
+        """
+        # Horizontal check
+        for i in range(3):
+            b_ = True
+            for j in range(2):
+                if self.board[i][j] == None or self.board[i][j] != self.board[i][j + 1]:
+                    b_ = False
+            
+            if b_:
+                self.winner = self.board[i][0]
+                return True
+        
+        # Vertical check
+        for j in range(3):
+            b_ = True
+            for i in range(2):
+                if self.board[i][j] == None or self.board[i][j] != self.board[i + 1][j]:
+                    b_ = False
+            
+            if b_:
+                self.winner = self.board[0][j]
+                return True
+        
+        # Diagonal check
+        if self.board[1][1] != None:
+            if self.board[0][0] == self.board[1][1] == self.board[2][2]:
+                self.winner = self.board[1][1]
+                return True
+
+            if self.board[2][0] == self.board[1][1] == self.board[0][2]:
+                self.winner = self.board[1][1]
+                return True
+
+        # Draw check
+        if sum([row.count(None) for row in self.board]) == 0:
+            self.winner = None
+            return True
+        
+        return False
+    
+    def gameover(self):
+        """
+        Checks if the game is over
+
+        Returns:
+            bool: True if game over, False otherwise
+        """
+        if self._gameover:
+            return True
+        
+        if self.terminal():
+            self._gameover = True
+            return True
+        
+        return False
