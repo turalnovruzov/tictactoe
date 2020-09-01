@@ -45,6 +45,15 @@ class Tictactoe:
         """
         return self.winner
     
+    def get_player(self):
+        """
+        Get function for player
+
+        Returns:
+            str: 'X' or 'O'
+        """
+        return self.player
+    
     @classmethod
     def available_actions(cls, board):
         """
