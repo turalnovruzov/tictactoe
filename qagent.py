@@ -21,7 +21,7 @@ class QAgent:
     A q-learning agent for Tictactoe
     """
 
-    def __init__(self, alpha, epsilon):
+    def __init__(self, alpha=0.5, epsilon=0.1):
         """
         Initializes the QAgent
 

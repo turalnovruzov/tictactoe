@@ -2,6 +2,7 @@ import pygame
 import os
 import time
 from tictactoe import Tictactoe
+from qagent import QAgent
 
 X = 'X'
 O = 'O'
@@ -38,6 +39,10 @@ gamestate = MENU_STATE
 
 # Player
 ai_turn = None
+
+# Load agent
+agent = QAgent()
+agent.load()
 
 # tictactoe
 ttt = None
@@ -86,8 +91,13 @@ while True:
             title_rect = title.get_rect()
             title_rect.center = (WIDTH / 2, 60)
             screen.blit(title, title_rect)
+        else:
 
-
+            # AI's turn
+            if ai_turn:
+                ttt.action(agent.best_action(ttt.get_board()))
+                ai_turn = False
+        
         # Draw cells
         cells = []
         for i in range(3):
@@ -156,16 +166,20 @@ while True:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 point = event.pos
 
-                # If game is not over
-                if not ttt.gameover():
-                    # Cells
-                    b_ = True
-                    for i in range(3):
-                        for j in range(3):
-                            if cells[i][j].collidepoint(point):
-                                if ttt.is_valid_action((i, j)):
-                                    ttt.action((i, j))
-                                break
+                # If user's trun
+                if not ai_turn:
+
+                    # If game is not over
+                    if not ttt.gameover():
+                        # Cells
+                        b_ = True
+                        for i in range(3):
+                            for j in range(3):
+                                if cells[i][j].collidepoint(point):
+                                    if ttt.is_valid_action((i, j)):
+                                        ttt.action((i, j))
+                                        ai_turn = True
+                                    break
                 
                 # Menu button
                 if menu_button.collidepoint(point):
