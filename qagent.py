@@ -130,10 +130,16 @@ class QAgent:
         
         return best_action
     
-    def train(self, num_iterations):
+    def train(self, num_games):
+        """
+        Trains the agent by playing games against itself
 
-        # Play num_iterations games
-        for n in num_iterations:
+        Args:
+            num_games (int): number of games to train
+        """
+
+        # Play num_games games
+        for n in num_games:
 
             # Print game number
             for n % 1000 == 0:
