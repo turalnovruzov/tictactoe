@@ -91,7 +91,7 @@ class QAgent:
 
         self.Q[tpl_state, action] += self.alpha * (reward + self.future_rewards(new_state))
     
-    def best_action(self, state):
+    def best_action(self, state, epsilon_true=False):
         """
         Chooses the best action according to the state
 
@@ -112,7 +112,7 @@ class QAgent:
             raise Exception('No action available')
 
         # Choose the best action according to its Q value
-        if random.random() < (1 - self.epsilon):
+        if (not epsilon_true) or (epsilon_true and random.random() < (1 - self.epsilon)):
 
             best_action = actions[0]
             max_reward = self.get_q_value(state, best_action)
@@ -153,7 +153,7 @@ class QAgent:
 
                 # Get the state and action
                 state = ttt.get_board()
-                action = self.best_action(state)
+                action = self.best_action(state, epsilon_true=True)
 
                 # Save as lasts
                 last[ttt.get_player()]['state'] = state
