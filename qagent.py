@@ -1,3 +1,4 @@
+import random
 from tictactoe import Tictactoe
 
 
@@ -111,14 +112,20 @@ class QAgent:
             raise Exception('No action available')
 
         # Choose the best action according to its Q value
-        best_action = actions[0]
-        max_reward = self.get_q_value(state, best_action)
+        if random.random() < (1 - self.epsilon):
 
-        for action in actions:
-            value = self.get_q_value(state, action)
+            best_action = actions[0]
+            max_reward = self.get_q_value(state, best_action)
 
-            if value > max_reward:
-                best_action = action
-                max_reward = value
+            for action in actions:
+                value = self.get_q_value(state, action)
+
+                if value > max_reward:
+                    best_action = action
+                    max_reward = value
+        
+        # Randomly choose the best action
+        else:
+            best_action = randomm.choice(actions)
         
         return best_action
