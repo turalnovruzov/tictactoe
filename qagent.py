@@ -1,3 +1,6 @@
+from tictactoe import Tictactoe
+
+
 def state_to_tuple(state):
     """
     Converst state to nested tuples
@@ -39,3 +42,22 @@ class QAgent:
             return self.Q[tpl, action]
 
         return 0
+    
+    def best_action(self, state):
+        # Get all the available ations
+        actions = Tictactoe.available_actions(state)
+
+        # Raise if no action available
+        if len(actions) == 0:
+            raise Exception('No action available')
+
+        # Choose the best action according to its Q value
+        best_action = actions[0]
+        max_reward = self.get_q_value(state, best_action)
+
+        for action in actions:
+            if self.get_q_value(state, action) > max_reward:
+                best_action = action
+                max_reward = self.get_q_value(state, action)
+        
+        return best_action
