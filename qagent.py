@@ -1,3 +1,16 @@
+def state_to_tuple(state):
+    """
+    Converst state to nested tuples
+
+    Args:
+        state (nested list (3 x 3)): the state
+
+    Returns:
+        nested tuple (3 x 3): the state converted to nested tuple
+    """
+    return (tuple(row) for row in state)
+
+
 class QAgent:
     """
     A q-learning agent for Tictactoe
