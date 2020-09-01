@@ -81,6 +81,15 @@ class QAgent:
         
         return max_reward
     
+    def update_q_value(self, state, action, new_state, reward):
+        # Get the old q value
+        old_q = self.get_q_value(state, action)
+
+        # Convert state to tuple
+        tpl_state = state_to_tuple(state)
+
+        self.Q[tpl_state, action] += self.alpha * (reward + self.future_rewards(new_state))
+    
     def best_action(self, state):
         """
         Chooses the best action according to the state
