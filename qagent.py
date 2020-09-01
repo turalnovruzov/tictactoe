@@ -34,6 +34,16 @@ class QAgent:
         self.Q = dict()
     
     def get_q_value(self, state, action):
+        """
+        Gets the Q value for the state and action
+
+        Args:
+            state (nested list (3 x 3)): a Tictactoe board
+            action (tuple (i, j)): indexes of a cell in the state
+
+        Returns:
+            float: the Q value
+        """
         # Convert state to tuple
         tpl = state_to_tuple(state)
 
@@ -44,6 +54,18 @@ class QAgent:
         return 0
     
     def best_action(self, state):
+        """
+        Chooses the best action according to the state
+
+        Args:
+            state (nested list (3 x 3)): a Tictactoe board
+
+        Raises:
+            Exception: If no action is available
+
+        Returns:
+            tuple (i, j): best action
+        """
         # Get all the available ations
         actions = Tictactoe.available_actions(state)
 
