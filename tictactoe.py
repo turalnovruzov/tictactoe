@@ -45,6 +45,27 @@ class Tictactoe:
         """
         return self.winner
     
+    @classmethod
+    def available_actions(cls, board):
+        """
+        Finds all the available actions for the given board
+
+        Args:
+            board (nested list (3 x 3)): a Tictactoe board
+
+        Returns:
+            list of tuples (i, j): the available actions
+        """
+        actions = []
+
+        # Loop through the board
+        for i in range(3):
+            for j in range(3):
+                if board[i][j] == None:
+                    actions.append((i, j))
+        
+        return actions
+    
     def is_valid_action(self, action):
         """
         Checks if the action is valid
