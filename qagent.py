@@ -97,8 +97,10 @@ class QAgent:
         max_reward = self.get_q_value(state, best_action)
 
         for action in actions:
-            if self.get_q_value(state, action) > max_reward:
+            value = self.get_q_value(state, action)
+
+            if value > max_reward:
                 best_action = action
-                max_reward = self.get_q_value(state, action)
+                max_reward = value
         
         return best_action
