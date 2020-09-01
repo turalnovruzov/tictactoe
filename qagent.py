@@ -29,3 +29,13 @@ class QAgent:
 
         # Q table
         self.Q = dict()
+    
+    def get_q_value(self, state, action):
+        # Convert state to tuple
+        tpl = state_to_tuple(state)
+
+        # If (state, action) in Q return value, else return 0
+        if (state_to_tuple(state), action) in self.Q:
+            return self.Q[tpl, action]
+
+        return 0
