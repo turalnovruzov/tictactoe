@@ -54,6 +54,15 @@ class QAgent:
         return 0
     
     def future_rewards(self, state):
+        """
+        Calculates the maximum reward of state
+
+        Args:
+            state (nested list (3 x 3)): a Tictactoe board
+
+        Returns:
+            float: maximum reward
+        """
         # Get all the available ations
         actions = Tictactoe.available_actions(state)
 
