@@ -53,6 +53,25 @@ class QAgent:
 
         return 0
     
+    def future_rewards(self, state):
+        # Get all the available ations
+        actions = Tictactoe.available_actions(state)
+
+        # Return 0 if not actions available
+        if len(actions) == 0:
+            return 0
+
+        # Choose the max reward according to the Q table
+        max_reward = self.get_q_value(state, actions[0])
+
+        for action in actions:
+            value = self.get_q_value(state, action)
+
+            if value > max_reward:
+                max_reward = value
+        
+        return max_reward
+    
     def best_action(self, state):
         """
         Chooses the best action according to the state
