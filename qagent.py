@@ -129,3 +129,64 @@ class QAgent:
             best_action = randomm.choice(actions)
         
         return best_action
+    
+    def train(self, num_iterations):
+
+        # Play num_iterations games
+        for n in num_iterations:
+
+            # Print game number
+            for n % 1000 == 0:
+                print(f'Game #{n + 1}')
+            
+            # Initialize the game
+            ttt = Tictactoe()
+
+            # Keep track of last state and actions
+            last = {
+                'X': {'state': None, 'action': None},
+                'O': {'state': None, 'action': None}
+            }
+
+            # Play the game
+            while True:
+
+                # Get the state and action
+                state = ttt.get_board()
+                action = self.best_action(state)
+
+                # Save as lasts
+                last[ttt.get_player()]['state'] = state
+                last[ttt.get_player()]['action'] = action
+
+                # Apply action and get the new state
+                ttt.action(action)
+                new_state = ttt.get_board()
+
+                # Game over
+                if ttt.gameover():
+
+                    # Won the game
+                    if ttt.get_winner() is not None:
+
+                        # Update q value for winner
+                        self.update_q_value(state, action, new_state, 1)
+
+                        # Update q value for loser
+                        self.update_q_value(
+                            last[ttt.get_player()]['state'],
+                            last[ttt.get_player()]['action'],
+                            new_state, -1
+                        )
+                
+                # Game continues
+                elif last[ttt.get_player()]['state'] is not None:
+
+                    # Update last action
+                    self.update_q_value(
+                        last[ttt.get_player()]['state'],
+                        last[ttt.get_player()]['action'],
+                        new_state, 0
+                    )
+        
+        print('Training done')
