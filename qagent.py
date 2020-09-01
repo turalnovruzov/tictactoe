@@ -1,4 +1,5 @@
 import random
+import pickle
 from tictactoe import Tictactoe
 
 
@@ -33,6 +34,26 @@ class QAgent:
 
         # Q table
         self.Q = dict()
+    
+    def load(self, filepath='Q.pkl'):
+        """
+        Loads Q table from file
+
+        Args:
+            filepath (str, optional): the file's path. Defaults to 'Q.pkl'.
+        """
+        with open(filepath, 'rb') as file:
+            self.Q = pickle.load(file)
+    
+    def save(self, filepath='Q.pkl'):
+        """
+        Saves Q table to file
+
+        Args:
+            filepath (str, optional): the file's path. Defaults to 'Q.pkl'.
+        """
+        with open(filepath, 'wb') as file:
+            pickle.dump(self.Q, file, protocol=pickle.HIGHEST_PROTOCOL)
     
     def get_q_value(self, state, action):
         """
