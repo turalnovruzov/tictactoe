@@ -1,3 +1,6 @@
+import copy
+
+
 # Constants
 X = 'X'
 O = 'O'
@@ -35,7 +38,7 @@ class Tictactoe:
         Returns:
             Nested list (3 x 3): board
         """
-        return self.board.copy()
+        return copy.deepcopy(self.board)
     
     def get_winner(self):
         """Get function for winner

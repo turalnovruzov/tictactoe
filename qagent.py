@@ -13,7 +13,7 @@ def state_to_tuple(state):
     Returns:
         nested tuple (3 x 3): the state converted to nested tuple
     """
-    return (tuple(row) for row in state)
+    return tuple(tuple(row) for row in state)
 
 
 class QAgent:
@@ -110,7 +110,7 @@ class QAgent:
         # Convert state to tuple
         tpl_state = state_to_tuple(state)
 
-        self.Q[tpl_state, action] += self.alpha * (reward + self.future_rewards(new_state))
+        self.Q[tpl_state, action] = old_q + self.alpha * ((reward + self.future_rewards(new_state)) - old_q)
     
     def best_action(self, state, epsilon_true=False):
         """
@@ -147,7 +147,7 @@ class QAgent:
         
         # Randomly choose the best action
         else:
-            best_action = randomm.choice(actions)
+            best_action = random.choice(actions)
         
         return best_action
     
@@ -160,10 +160,10 @@ class QAgent:
         """
 
         # Play num_games games
-        for n in num_games:
+        for n in range(num_games):
 
             # Print game number
-            for n % 1000 == 0:
+            if n % 1000 == 0:
                 print(f'Game #{n + 1}')
             
             # Initialize the game
@@ -205,6 +205,13 @@ class QAgent:
                             last[ttt.get_player()]['action'],
                             new_state, -1
                         )
+                    
+                    # Draw
+                    else:
+                        # Update q value
+                        self.update_q_value(state, action, new_state, 0)
+                    
+                    break
                 
                 # Game continues
                 elif last[ttt.get_player()]['state'] is not None:
