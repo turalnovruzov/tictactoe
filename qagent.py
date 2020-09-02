@@ -141,7 +141,7 @@ class QAgent:
             for action in actions:
                 value = self.get_q_value(state, action)
 
-                if value > max_reward:
+                if value > max_reward or (value == max_reward and random.random() < 0.5):
                     best_action = action
                     max_reward = value
         
