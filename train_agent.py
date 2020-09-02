@@ -1,7 +1,8 @@
+import argparse
 from qagent import QAgent
 
-agent = QAgent(0.5, 0.3)
-
-agent.train(100000)
-
-agent.save()
+# Argument parser
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', '--filepath', type=str, default='Q.pkl',
+                    help='Full or relative path of a file in which the agent is stored')
+args = parser.parse_args()
