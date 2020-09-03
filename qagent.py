@@ -42,8 +42,15 @@ class QAgent:
         Args:
             filepath (str, optional): the file's path. Defaults to 'Q.pkl'.
         """
-        with open(filepath, 'rb') as file:
-            self.Q = pickle.load(file)
+        try:
+            with open(filepath, 'rb') as file:
+                self.Q = pickle.load(file)
+        except FileNotFoundError:
+            print(f'{filepath} does not exist.')
+            exit()
+        except:
+            print(f'{filename} does not contain an agent.')
+            exit()
     
     def save(self, filepath='Q.pkl'):
         """

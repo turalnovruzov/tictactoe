@@ -12,14 +12,11 @@ O = 'O'
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', type=str, default='Q.pkl', metavar='FILEPATH', dest='filepath',
                     help='Full or relative path of a file in which the agent is stored. Defaults to \"Q.pkl\"')
+args = parser.parse_args()
 
 # Load agent
 agent = QAgent()
-
-try:
-    agent.load(args.filepath)
-except FileNotFoundError:
-    print(f'{args.filepath} does not exist. Train a model by running \"python3 train_agent.py 100000\"'')
+agent.load(args.filepath)
 
 # Initialize pygame
 pygame.init()
