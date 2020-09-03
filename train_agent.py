@@ -45,7 +45,10 @@ args = parser.parse_args()
 agent = QAgent(alpha=args.alpha, epsilon=args.epsilon)
 
 if args.load:
-    agent.load(args.filepath)
+    try:
+        agent.load(args.filepath)
+    except FileNotFoundError:
+        print(f'{args.filepath} does not exist. Not loading agent from file.')
 
 agent.train(args.episodes)
 
