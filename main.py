@@ -1,11 +1,25 @@
 import pygame
 import os
 import time
+import argparse
 from tictactoe import Tictactoe
 from qagent import QAgent
 
 X = 'X'
 O = 'O'
+
+# Argument parser
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', type=str, default='Q.pkl', metavar='FILEPATH', dest='filepath',
+                    help='Full or relative path of a file in which the agent is stored. Defaults to \"Q.pkl\"')
+
+# Load agent
+agent = QAgent()
+
+try:
+    agent.load(args.filepath)
+except FileNotFoundError:
+    print(f'{args.filepath} does not exist. Train a model by running \"python3 train_agent.py 100000\"'')
 
 # Initialize pygame
 pygame.init()
@@ -39,10 +53,6 @@ gamestate = MENU_STATE
 
 # Player
 ai_turn = None
-
-# Load agent
-agent = QAgent()
-agent.load()
 
 # tictactoe
 ttt = None

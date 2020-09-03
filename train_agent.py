@@ -34,7 +34,7 @@ def check_epsilon(epsilon):
 parser = argparse.ArgumentParser()
 parser.add_argument('episodes', type=check_episodes, help='Number of games to train.')
 parser.add_argument('-f', type=str, default='Q.pkl', metavar='FILEPATH', dest='filepath',
-                    help='Full or relative path of a file in which the agent is stored. Defaults to \"Q.pkl\"')
+                    help='Full or relative path of a file in which the agent is (to be) stored. Defaults to \"Q.pkl\"')
 parser.add_argument('-l', dest='load', action='store_true', help='Load agent from file.')
 parser.add_argument('-a', type=check_alpha, dest='alpha', metavar='ALPHA', default=0.5,
                     help='Learning rate. Must be float and strictly grater than 0. Defaults to 0.5.')
