@@ -1,6 +1,8 @@
-# Tic-Tac-Toe
+# Tic-Tac-Toe AI
 
 Tic-Tac-Toe with an AI, who trained for years to become a master.
+
+![Gameplay of Tic-Tac-Toe](gifs/gameplay.gif)
 
 ## Installation
 
