@@ -1,5 +1,6 @@
 import random
 import pickle
+import os
 from tictactoe import Tictactoe
 
 
@@ -34,6 +35,11 @@ class QAgent:
 
         # Q table
         self.Q = dict()
+
+        # Create agents directory
+        self.agent_dir = 'agents'
+        if not os.path.isdir(self.agent_dir):
+            os.mkdir(self.agent_dir)
     
     def load(self, filepath='Q.pkl'):
         """
@@ -43,7 +49,7 @@ class QAgent:
             filepath (str, optional): the file's path. Defaults to 'Q.pkl'.
         """
         try:
-            with open(filepath, 'rb') as file:
+            with open(os.path.join(self.agent_dir, filepath), 'rb') as file:
                 self.Q = pickle.load(file)
         except FileNotFoundError:
             print(f'{filepath} does not exist.')
@@ -59,7 +65,7 @@ class QAgent:
         Args:
             filepath (str, optional): the file's path. Defaults to 'Q.pkl'.
         """
-        with open(filepath, 'wb') as file:
+        with open(os.path.join(self.agent_dir, filepath), 'wb') as file:
             pickle.dump(self.Q, file, protocol=pickle.HIGHEST_PROTOCOL)
     
     def get_q_value(self, state, action):
