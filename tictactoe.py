@@ -57,8 +57,8 @@ class Tictactoe:
         """
         return self.player
     
-    @classmethod
-    def available_actions(cls, board):
+    @staticmethod
+    def available_actions(board):
         """
         Finds all the available actions for the given board
 
