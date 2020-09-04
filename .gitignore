@@ -1,5 +1,5 @@
 venv/
 .vscode/
 __pycache__/
+agents/
 .DS_Store
-Q.pkl
